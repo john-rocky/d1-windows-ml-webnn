@@ -310,19 +310,19 @@ than 128 tokens. The answers are scored with `score.py` like the rows above, and
 d1-on-windows' head (`npu/head.py`) and upstream's read-out on the hidden states the page returned. An example's time
 is the median of 9 decisions after one warm one, for each of the examples' 8 questions.
 
-| Device | WebNN deviceType | Model | Answers (same top / scored) | The page's read-out vs Python's (same top, largest difference) | One question of the examples, ms | Session ready after, s |
+| Device | WebNN deviceType | Model | Answers (same top / scored) | The page's read-out vs Python's (same top, largest difference) | One question of the examples, ms | Session ready after, s (headless, one device a page) |
 |---|---|---|---|---|---|---|
 | RTX 5080 Laptop | gpu | static 128, fp16 | 311/311 | 311/311, 1.6e-06 | 17.5–20.0 | 36 |
 | Intel NPU | npu | static 128, int8 weights | 311/311 | 311/311, 1.5e-06 | 55.6–57.1 | 85 |
 | CPU | cpu | static 128, int8 weights | 310/311 (1 not a near tie) | 311/311, 1.7e-06 | 528–532 | 21 |
 
-The first decision after a pause takes longer: on the GPU, 0.18 to 0.2 s headless and 1.0 s in the app window, and
-about 0.1 s on the NPU, in the runs here.
+The first decision after a pause takes longer: on the GPU, 0.18 to 0.2 s headless (in one run the one after it too,
+0.1 s) and 1.0 s in the app window; on the NPU the first three are slower, 97, 75 and 64 ms, in the runs here.
 
 ```powershell
-# After the WebNN block (it fills webroot\ort and webroot\models), in the same window on the laptop's own desktop.
-# The page loads the GPU, NPU and CPU sessions one after another (the NPU compiles for about a minute); the buttons on
-# the right switch between them.
+# After the WebNN block (it fills webroot\ort, webroot\models and webroot\fixtures), in the same window on the
+# laptop's own desktop. The page loads the GPU, NPU and CPU sessions one after another (the NPU session took 73 to 85 s
+# to be ready in the runs here); the buttons on the right switch between them.
 Copy-Item web\demo.html, web\demo.mjs, web\d1prompt.mjs, web\d1tok.mjs webroot\
 Copy-Item "$model\tokenizer.json" webroot\models\tokenizer.json
 Copy-Item requests.json webroot\fixtures\requests.json
