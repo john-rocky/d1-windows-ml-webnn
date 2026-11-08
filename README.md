@@ -15,10 +15,10 @@ ran it through CUDA, WebGPU and OpenVINO on the same laptop; that repository's r
 its own prompt building, tokenizer and option head in JavaScript, and shows the milliseconds of each decision.
 
 Machine of the run recorded here (2026-11-07; the last WebNN row and the second timing of three d1-on-windows rows
-after midnight; the WebNN rows on the Intel GPU on 2026-11-09, with the Windows build and the drivers below read again
-that day): MSI Stealth 16 AI+ B3WI, Windows 11 Home 25H2 (26200.9711), Core Ultra 9 386H, Intel(R) Graphics (driver
-32.0.101.8724), Intel(R) NPU (driver 32.0.100.4841), NVIDIA GeForce RTX 5080 Laptop GPU (16 GB, driver 591.74), 32 GB
-RAM.
+after midnight; the WebNN rows on the Intel GPU and the Windows ML row with 2-D convolutions on 2026-11-09, with the
+Windows build and the drivers below read again that day): MSI Stealth 16 AI+ B3WI, Windows 11 Home 25H2 (26200.9711),
+Core Ultra 9 386H, Intel(R) Graphics (driver 32.0.101.8724), Intel(R) NPU (driver 32.0.100.4841), NVIDIA GeForce RTX
+5080 Laptop GPU (16 GB, driver 591.74), 32 GB RAM.
 
 ## Results
 
@@ -47,6 +47,7 @@ between 14:50 and 15:22 on 2026-11-07, in the same run of timings as the Windows
 | Intel GPU | d1-on-windows' row, re-timed 2026-11-07 | OpenVINO 1.8.1 (PyPI) | GenAI cpu-fp32 | d1-on-windows' record | 130 / 176 / 622 | ×1.21 / ×1.26 / ×1.57 | — |
 | Intel GPU | Windows ML, ORT 1.30.0, GenAI-winml | OpenVINO 1.7.0 | GenAI cpu-fp32 | 415/415 | 144 / 195 / 685 | ×1.34 / ×1.39 / ×1.73 | ×1.11 |
 | Intel GPU | Windows ML, ORT 1.28.3 | OpenVINO 1.7.0 | static 128, fp16 | 311/311 | 103 / 102 / — | ×0.95 / ×0.73 / — | ×0.58 |
+| Intel GPU | Windows ML, ORT 1.28.3 | OpenVINO 1.7.0 | static 128, int8 weights, 1-D convolutions as 2-D | 311/311 | 50.0 / 49.9 / — | ×0.46 / ×0.36 / — | — |
 | Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=OpenVINOExecutionProvider,0x8086,0xb0a0` | OpenVINO 1.7.0 (Intel GPU) | static 128, fp16 | 311/311 | 108 / 103 / — | ×1.00 / ×0.74 / — | — |
 | Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=DmlExecutionProvider,0x8086,0xb0a0` | DirectML (Intel GPU) | static 128, fp16 | 311/311 | 109 / 107 / — | ×1.01 / ×0.76 / — | — |
 | Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=OpenVINOExecutionProvider,0x8086,0xb0a0` | OpenVINO 1.7.0 (Intel GPU) | static 128, int8 weights | 311/311 | 52.8 / 52.9 / — | ×0.49 / ×0.38 / — | — |
@@ -101,6 +102,11 @@ The Intel GPU WebNN rows were timed on 2026-11-09 from 05:00 to 05:10 (Edge 157.
 check on the RTX with the fp16 graph as a control: 18.2 ms before and 18.5 ms after for 101 tokens (Edge 156's row
 above: 17.0 ms). No d1-on-windows row was timed with them, so their last column is empty.
 
+The Windows ML row with 2-D convolutions was timed on 2026-11-09 from 08:02 to 08:03, by the last five lines of block
+3 below (from `conv1d_to_2d.py` on), run as written, between two runs of the static fp16 row above as a control:
+100.2 ms before and 96.1 ms after for 101 tokens (the row: 102 ms; both under it, the second by 5.8 %). No
+d1-on-windows row was timed with it, so its last column is empty.
+
 Edge's rows marked "signed-in session" ran from the laptop's desktop. Its int8-weight cpu and npu rows ran from an ssh
 session, where Edge's GPU process restarted twice and the page then answered (see "What did not work").
 
@@ -109,7 +115,9 @@ session, where Edge's GPU process restarted twice and the page then answered (se
   Windows ML (see "What did not work").
 - Intel GPU: the static fp16 graph on Windows ML's OpenVINO EP, 102 ms (×0.58), runs where d1-on-windows' OpenVINO IR
   of the same wrapper (fp16 weights, 128 tokens) failed to compile in OpenVINO Runtime. GenAI with the same EP, 195 ms,
-  is ×1.11 of the re-timing (the OpenVINO EP from PyPI).
+  is ×1.11 of the re-timing (the OpenVINO EP from PyPI). The int8-weight graph, as block 2 writes it, does not compile
+  on this EP (see "What did not work"); with its 22 1-D convolutions rewritten as 2-D convolutions (`conv1d_to_2d.py`),
+  it answers all 311 and takes 49.9 ms for 101 tokens (×0.36 of d1-on-windows' row).
 - CPU: GenAI with Windows ML's OpenVINO EP, 1,411 ms (×1.05), and with the CPU EP, 1,885 ms (×1.40). Both OpenVINO
   EP builds hold much more memory on long prompts (see "What did not work"); the CPU EP answers all 415 questions.
 - Intel NPU: d1-on-windows' NPU graph runs unchanged on Windows ML's OpenVINO EP at the same speed, 54.1 ms (×1.00).
@@ -124,9 +132,12 @@ session, where Edge's GPU process restarted twice and the page then answered (se
   id>`, which makes WebNN hand ONNX Runtime that one device whatever `deviceType` the page asks for (ONNX Runtime's CPU
   fallback stays on). On this laptop's Intel(R) Graphics (`0x8086,0xb0a0`) the OpenVINO EP takes 103 ms with fp16 and
   52.9 ms with int8 weights for 101 tokens (×0.74 and ×0.38 of d1-on-windows' Intel GPU row), and DirectML 107 ms and
-  829 ms. The int8-weight graph runs on the OpenVINO EP here, where it fails on Windows ML's OpenVINO EP (see "What did
-  not work"). The cause was not separated; one difference is that through WebNN the EP gets a graph Chromium rebuilds
-  from the page's WebNN operations, not the ONNX file.
+  829 ms. The int8-weight graph runs on the OpenVINO EP here, where it fails on Windows ML's OpenVINO EP as block 2
+  writes it (see "What did not work"). The difference that decides it is the form of the graph's 22 1-D convolutions:
+  ONNX Runtime Web's WebNN EP hands each 1-D convolution to WebNN as a 2-D convolution between two reshapes, and the
+  ONNX file with its convolutions rewritten that way compiles on Windows ML's OpenVINO EP too (see the Intel GPU bullet
+  above). The error needs the 1-D form together with what follows the convolution in the int8-weight graph (the
+  multiply and the int8-weight MatMul); the fp16 graph, with the same 1-D convolutions, compiles.
 - WebNN on the NPU: the int8-weight graph takes 55.2 to 56.1 ms in all three browsers (d1-on-windows' NPU row: 54.0 ms
   in the re-timing) and the fp16 graph 97.2 ms in Edge, as on Windows ML (96.8 ms).
 - WebNN on the CPU: `deviceType` cpu is the OpenVINO EP's CPU device, 526 to 532 ms with one changed answer (see "What
@@ -235,11 +246,21 @@ foreach ($r in @(
   & $py run_static.py --upstream upstream --model $graph --ep $ep @dev --winml --head ir-128\lm_head.npy --ids speed-ids-128.json --passes 2 --out "speed_wml_$tag.jsonl"
   & $py d1-on-windows\speed_lines.py "speed_wml_$tag.jsonl"
 }
+# The int8-weight graph on the Intel GPU: its 22 1-D convolutions rewritten as 2-D convolutions (the form ONNX Runtime
+# Web's WebNN EP gives them); the graph as exported does not compile there (see "What did not work")
+& $py conv1d_to_2d.py --model x\w8-128\model.onnx --out x\w8-128\model_c2d.onnx
+& $py run_static.py --upstream upstream --model x\w8-128\model_c2d.onnx --ep OpenVINOExecutionProvider --hw GPU --winml --head ir-128\lm_head.npy --ids ids-128.json --out wml_ov_gpu_w8c2d.jsonl
+& $py d1-on-windows\score.py wml_ov_gpu_w8c2d.jsonl reference_probs.json
+& $py run_static.py --upstream upstream --model x\w8-128\model_c2d.onnx --ep OpenVINOExecutionProvider --hw GPU --winml --head ir-128\lm_head.npy --ids speed-ids-128.json --passes 2 --out speed_wml_ov_gpu_w8c2d.jsonl
+& $py d1-on-windows\speed_lines.py speed_wml_ov_gpu_w8c2d.jsonl
 ```
 
 `winml_probe.py` lists each EP of the catalog with its state before and after `ensure_ready()`, its package and
 version, and the devices ONNX Runtime then offers. `run_static.py` registers the catalog's EPs (`--winml`) and runs the
 graph on one device of one EP; `--hw` picks the device type when the EP has several.
+`conv1d_to_2d.py` writes `model_c2d.onnx` next to `model.onnx` and leaves the weight files as they are: a 1-D
+convolution's weight has the same bytes as its 2-D form, so only `model.onnx` changes: each of those convolutions gets
+a reshape before and after it, and its weight a fourth dimension of 1.
 
 ```powershell
 # Windows ML with ONNX Runtime 1.30.0 (onnxruntime-windowsml from PyPI): GenAI on WebGPU, OpenVINO and the CPU, answers and times
@@ -421,7 +442,8 @@ foreach ($run in $runs) {
 # cpu-fp32 on the OpenVINO EP (GPU) and the WebGPU EP, cpu-int8 on the OpenVINO EP (CPU) and the CPU EP, all with this error
 RuntimeError: Load model from ...\cpu-int8\model.onnx failed:This is an invalid model. In Node, ("/model/layers.0/conv/CausalConvWithState", CausalConvWithState, "com.microsoft", -1) : ("/model/layers.0/conv/Mul_1/output_0": tensor(float),"model.layers.0.conv.conv.weight": tensor(float),"","past.0.conv": tensor(float),) -> ("/model/layers.0/conv/CausalConvWithState/output_0": tensor(float),"/model/layers.0/conv/CausalConvWithState/output_1": tensor(float),) , Error Unrecognized attribute: state_window for operator CausalConvWithState
 
-# The static graph with int8 weights (w8) on the Intel GPU through Windows ML's OpenVINO EP; the fp16 graph (h16) works
+# The static graph with int8 weights (w8) on the Intel GPU through Windows ML's OpenVINO EP, as exported; the fp16
+# graph (h16) works, and so does w8 with its 1-D convolutions rewritten as 2-D (conv1d_to_2d.py, in block 3)
 onnxruntime.capi.onnxruntime_pybind11_state.EPFail: [ONNXRuntimeError] : 11 : EP_FAIL : Exception from src\inference\src\cpp\core.cpp:120:
 Exception from src\inference\src\dev\plugin.cpp:54:
 Check 'false' failed at src\plugins\intel_gpu\src\plugin\program_builder.cpp:168:
