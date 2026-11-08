@@ -2,6 +2,7 @@
 SharedArrayBuffer in ONNX Runtime Web), plus two POST endpoints the page uses to hand its results back to the disk:
   POST /log/<tag>      appends the body (one text line) to <results>/<tag>.log
   POST /result/<tag>   writes the body to <results>/<tag>.json and an empty <results>/<tag>.done
+A GET with "Range: bytes=a-b" gets those bytes (206): demo.html reads the options' rows of lm_head.npy that way.
 Binds to 127.0.0.1 only.
 
     python serve.py --root <dir with index.html, ort/, models/> --results <dir> --port 8780
@@ -17,6 +18,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 sys.stdout.reconfigure(encoding="utf-8")
 SAFE = re.compile(r"^[A-Za-z0-9_.\-]+$")
+RANGE = re.compile(r"^bytes=(\d+)-(\d*)$")
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -30,6 +32,29 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
+
+    def do_GET(self):
+        match = RANGE.match(self.headers.get("Range", "").strip())
+        path = self.translate_path(self.path)
+        if not match or not os.path.isfile(path):
+            return super().do_GET()
+        size = os.path.getsize(path)
+        start = int(match.group(1))
+        end = min(int(match.group(2)) if match.group(2) else size - 1, size - 1)
+        if start > end:
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{size}")
+            self.end_headers()
+            return
+        with open(path, "rb") as f:
+            f.seek(start)
+            data = f.read(end - start + 1)
+        self.send_response(206)
+        self.send_header("Content-Type", self.guess_type(path))
+        self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def do_POST(self):
         parts = self.path.strip("/").split("/")
@@ -66,8 +91,8 @@ def main():
     args = parser.parse_args()
     os.makedirs(args.results, exist_ok=True)
     Handler.results = os.path.abspath(args.results)
-    if not os.path.isfile(os.path.join(args.root, "index.html")):
-        sys.exit(f"no index.html in --root {args.root}")
+    if not any(os.path.isfile(os.path.join(args.root, page)) for page in ("index.html", "demo.html")):
+        sys.exit(f"no index.html or demo.html in --root {args.root}")
     try:
         server = Server(("127.0.0.1", args.port), functools.partial(Handler, directory=os.path.abspath(args.root)))
     except OSError as error:

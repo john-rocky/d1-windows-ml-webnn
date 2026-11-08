@@ -11,6 +11,9 @@ prompts of 39, 101 and 467 tokens for the times) run through the two newest Micr
 It is the same workload and the same scoring as [d1-on-windows](https://github.com/john-rocky/d1-on-windows), which
 ran it through CUDA, WebGPU and OpenVINO on the same laptop; that repository's rows are the baseline here.
 
+[Demo page](#demo-page): `web/demo.html` answers your own state, questions and options in Edge through WebNN, with
+its own prompt building, tokenizer and option head in JavaScript, and shows the milliseconds of each decision.
+
 Machine of the run recorded here (2026-11-07; the last WebNN row and the second timing of three d1-on-windows rows
 after midnight): MSI Stealth 16 AI+ B3WI, Windows 11 Home 25H2 (26200.9711), Core Ultra
 9 386H, Intel(R) Graphics (driver 32.0.101.8724), Intel(R) NPU (driver 32.0.100.4841), NVIDIA GeForce RTX 5080 Laptop
@@ -279,6 +282,73 @@ The page (`web/runner.mjs`) creates an `MLContext` for the device, hands it to O
 the 39- and 101-token prompts after one warm pass, answers the 311 questions that fit 128 tokens, and posts the hidden
 states back to `serve.py`. `post_web.py` turns them into answers with the same head and read-out as `run_static.py`.
 `webresults\<tag>.log` holds the page's lines and any error in full.
+
+## Demo page
+
+`web/demo.html` runs the decision step for your own input: type a state (text, or JSON), one or more questions with
+their type (choice, noul or score) and options, pick the GPU, the NPU or the CPU, and press Decide. The page builds
+upstream's prompt, turns it into tokens, runs the static 128-token graph through WebNN, and reads the answer from the
+options' rows of the head. It shows each option's probability and the milliseconds of each decision (the forward pass
+and the read-out, the span of the static rows above). Three examples fill the form. Python only serves the files
+(`serve.py` on 127.0.0.1).
+
+- `web/d1prompt.mjs`: upstream's request checks, prompt and read-out (`d1-decisions.py`, GenAI 0.19.0) in JavaScript:
+  the same error messages, the state written the way Python's `json.dumps(state, ensure_ascii=False, indent=2)` writes
+  it (key order, and floats such as `1000.0`), the option codes and token groups of each type, the softmax over the
+  options. One question is encoded as one string; several share the encoded prefix, as upstream does.
+- `web/d1tok.mjs`: byte-level BPE from the model's own `tokenizer.json` (its pre-tokenizer regex, merges and added
+  tokens).
+- The head: the page fetches only the options' rows of `lm_head.npy` (HTTP range requests, 8 KiB a row) and takes the
+  dot products itself.
+
+A question whose prompt is longer than 128 tokens is refused with its token count (the graphs are static).
+
+The block below ran as written on 2026-11-09 on the laptop above (Edge 157, headless, in the signed-in session). The
+page's prompts and tokens match d1-on-windows' `npu_ids_128.json` for all 311 questions that fit 128 tokens (the same
+token ids and option groups); the question upstream refuses is refused here too, and the same 104 questions are longer
+than 128 tokens. The answers are scored with `score.py` like the rows above, and the read-out column runs
+d1-on-windows' head (`npu/head.py`) and upstream's read-out on the hidden states the page returned. An example's time
+is the median of 9 decisions after one warm one, for each of the examples' 8 questions.
+
+| Device | WebNN deviceType | Model | Answers (same top / scored) | The page's read-out vs Python's (same top, largest difference) | One question of the examples, ms | Session ready after, s |
+|---|---|---|---|---|---|---|
+| RTX 5080 Laptop | gpu | static 128, fp16 | 311/311 | 311/311, 1.6e-06 | 17.5–20.0 | 36 |
+| Intel NPU | npu | static 128, int8 weights | 311/311 | 311/311, 1.5e-06 | 55.6–57.1 | 85 |
+| CPU | cpu | static 128, int8 weights | 310/311 (1 not a near tie) | 311/311, 1.7e-06 | 528–532 | 21 |
+
+The first decision after a pause takes longer: on the GPU, 0.18 to 0.2 s headless and 1.0 s in the app window, and
+about 0.1 s on the NPU, in the runs here.
+
+```powershell
+# After the WebNN block (it fills webroot\ort and webroot\models), in the same window on the laptop's own desktop.
+# The page loads the GPU, NPU and CPU sessions one after another (the NPU compiles for about a minute); the buttons on
+# the right switch between them.
+Copy-Item web\demo.html, web\demo.mjs, web\d1prompt.mjs, web\d1tok.mjs webroot\
+Copy-Item "$model\tokenizer.json" webroot\models\tokenizer.json
+Copy-Item requests.json webroot\fixtures\requests.json
+if (-not (Test-Path webroot\models\lm_head.npy)) { New-Item -ItemType HardLink -Path webroot\models\lm_head.npy -Target "$PWD\ir-128\lm_head.npy" | Out-Null }
+$server = Start-Process ".venv-build\Scripts\python.exe" -ArgumentList "web\serve.py --root webroot --results webresults --port 8780" -WindowStyle Hidden -PassThru
+Start-Sleep 5
+# As in the WebNN block: if another program already listens on 8780, the server stops here.
+$runs = if ($server.HasExited) { Write-Host "Port 8780 is taken (Get-NetTCPConnection -LocalPort 8780 -State Listen): stop that program, then run this block again."; @() } else { "ids", "gpu", "npu", "cpu" }
+$edge = "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+$py = ".venv-build\Scripts\python.exe"
+# The checks in the table above: one headless run each, the answers scored like the rows above
+foreach ($run in $runs) {
+  $tag = "demo_$run"
+  $query = if ($run -eq "ids") { "check=ids" } else { "check=parity&device=$run" }
+  Remove-Item "webresults\$tag.*" -ErrorAction SilentlyContinue
+  $browser = Start-Process $edge -ArgumentList "--user-data-dir=`"$PWD\profiles\$tag`" --no-first-run --headless=new --enable-features=WebMachineLearningNeuralNetwork `"http://127.0.0.1:8780/demo.html?$query&tag=$tag`"" -PassThru
+  $t0 = Get-Date
+  while (-not (Test-Path "webresults\$tag.done") -and ((Get-Date) - $t0).TotalMinutes -lt 20) { Start-Sleep 5 }
+  Get-CimInstance Win32_Process -Filter "Name = 'msedge.exe'" | Where-Object { $_.CommandLine -like "*profiles\$tag*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+  if ($run -eq "ids") { Select-String -Path "webresults\$tag.log" -Pattern "ids:" } else {
+    & $py web\check_demo.py --result "webresults\$tag.json" --d1 d1-on-windows --upstream upstream --head ir-128\lm_head.npy --reference reference_probs.json --ids ids-128.json --out "$tag.jsonl" }
+}
+# The page itself, as an app window
+if (-not $server.HasExited) { Start-Process $edge -ArgumentList "--user-data-dir=`"$PWD\profiles\demo`" --no-first-run --enable-features=WebMachineLearningNeuralNetwork --app=http://127.0.0.1:8780/demo.html" }
+# Close the window when done, then: Stop-Process -Id $server.Id
+```
 
 ## What did not work
 
