@@ -1,0 +1,12 @@
+04:59:25 tokenizer ready, head 128000 x 2048
+04:59:25 ids: 311 of 311 the same, 311 here, 1 refused on both sides, 104 longer than 128, 0 mismatches
+04:59:41 gpu (h16, low-power) ready: session 16.3 s
+04:59:42 parity 50
+04:59:43 parity 100
+04:59:44 parity 150
+04:59:45 parity 200
+04:59:46 parity 250
+04:59:47 parity 300
+04:59:47 parity done (311) in 6.0 s
+04:59:50 speed medians {"39":19.400000005960464,"101":19.439999997615814}; examples refund 19.0, team 19.3, urgency 19.8, category 19.5, needs_receipt 19.6, sentiment 18.7, defect 18.6, stars 19.1
+04:59:50 posted result

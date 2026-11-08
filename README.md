@@ -15,9 +15,10 @@ ran it through CUDA, WebGPU and OpenVINO on the same laptop; that repository's r
 its own prompt building, tokenizer and option head in JavaScript, and shows the milliseconds of each decision.
 
 Machine of the run recorded here (2026-11-07; the last WebNN row and the second timing of three d1-on-windows rows
-after midnight): MSI Stealth 16 AI+ B3WI, Windows 11 Home 25H2 (26200.9711), Core Ultra
-9 386H, Intel(R) Graphics (driver 32.0.101.8724), Intel(R) NPU (driver 32.0.100.4841), NVIDIA GeForce RTX 5080 Laptop
-GPU (16 GB, driver 591.74), 32 GB RAM.
+after midnight; the WebNN rows on the Intel GPU on 2026-11-09, with the Windows build and the drivers below read again
+that day): MSI Stealth 16 AI+ B3WI, Windows 11 Home 25H2 (26200.9711), Core Ultra 9 386H, Intel(R) Graphics (driver
+32.0.101.8724), Intel(R) NPU (driver 32.0.100.4841), NVIDIA GeForce RTX 5080 Laptop GPU (16 GB, driver 591.74), 32 GB
+RAM.
 
 ## Results
 
@@ -46,6 +47,10 @@ between 14:50 and 15:22 on 2026-11-07, in the same run of timings as the Windows
 | Intel GPU | d1-on-windows' row, re-timed 2026-11-07 | OpenVINO 1.8.1 (PyPI) | GenAI cpu-fp32 | d1-on-windows' record | 130 / 176 / 622 | ×1.21 / ×1.26 / ×1.57 | — |
 | Intel GPU | Windows ML, ORT 1.30.0, GenAI-winml | OpenVINO 1.7.0 | GenAI cpu-fp32 | 415/415 | 144 / 195 / 685 | ×1.34 / ×1.39 / ×1.73 | ×1.11 |
 | Intel GPU | Windows ML, ORT 1.28.3 | OpenVINO 1.7.0 | static 128, fp16 | 311/311 | 103 / 102 / — | ×0.95 / ×0.73 / — | ×0.58 |
+| Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=OpenVINOExecutionProvider,0x8086,0xb0a0` | OpenVINO 1.7.0 (Intel GPU) | static 128, fp16 | 311/311 | 108 / 103 / — | ×1.00 / ×0.74 / — | — |
+| Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=DmlExecutionProvider,0x8086,0xb0a0` | DirectML (Intel GPU) | static 128, fp16 | 311/311 | 109 / 107 / — | ×1.01 / ×0.76 / — | — |
+| Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=OpenVINOExecutionProvider,0x8086,0xb0a0` | OpenVINO 1.7.0 (Intel GPU) | static 128, int8 weights | 311/311 | 52.8 / 52.9 / — | ×0.49 / ×0.38 / — | — |
+| Intel GPU | WebNN, Edge 157 (signed-in session), ORT Web 1.31.1, deviceType gpu, Edge started with `--webnn-ort-ep-device=DmlExecutionProvider,0x8086,0xb0a0` | DirectML (Intel GPU) | static 128, int8 weights | 311/311 | 831 / 829 / — | ×7.69 / ×5.92 / — | — |
 | CPU | d1-on-windows' row, re-timed 2026-11-07 | OpenVINO 1.8.1 (PyPI) | GenAI cpu-int8 | d1-on-windows' record | 471 / 1346 / 5245 | ×2.23 / ×2.27 / ×2.28 | — |
 | CPU | Windows ML, ORT 1.30.0, GenAI-winml | OpenVINO 1.7.0 | GenAI cpu-int8 | 390/391 (1 near tie), the first 392 questions (memory, see below) | 480 / 1411 / 5379 | ×2.28 / ×2.38 / ×2.33 | ×1.05 |
 | CPU | Windows ML, ORT 1.30.0, GenAI-winml | CPU | GenAI cpu-int8 | 415/415 | 811 / 1885 / 8273 | ×3.84 / ×3.17 / ×3.59 | ×1.40 |
@@ -68,6 +73,12 @@ and the page's log (`.log`) under `web_…`, `webs1_…` (Edge's signed-in sessi
 RTX, run with `powerPreference: 'low-power'`), and times from a separate timing run, `speed_webt_…` (`speed_webs1t_…`
 for Edge's signed-in session). The re-timed d1-on-windows rows have times only (`speed_ctl_…`). In those files, the
 folders of the run are written as `<models>` (the model folders) and `<work>` (the working folder).
+The Intel GPU WebNN rows come from the demo page's headless check (see "Demo page"): answers
+`demo_igpu_<ov|dml>_<h16|w8>.jsonl` (`ov` = the OpenVINO EP, `dml` = DirectML, `h16` = fp16, `w8` = int8 weights), score
+`.score.json`, the check's summary with the times (`.check.json`), the page's log (`.log`) and the lines of Edge's log
+that name the device it used (`.selected.txt`); the same files for the two checks on the RTX timed before and after them
+(`demo_gpu_h16_before`, `demo_gpu_h16_after`) and for the check with `powerPreference: 'low-power'`
+(`demo_lowpower_gpu_h16`).
 
 Windows ML's TensorRT-RTX EP was also run on the RTX. Everything about it is left out of this repository (its rows, its
 result files, and its entry in the list of Windows ML EPs that each Windows ML result file carries, `winml_eps` or
@@ -86,6 +97,10 @@ the 14:50 rows), and 632 / 1,895 / 7,437 ms on the CPU (×1.34 to ×1.42, cause 
 for the Windows ML rows (timed together with their re-timing) and for the WebNN RTX and NPU rows. It does not hold for
 the WebNN CPU rows: there, only their own times count.
 
+The Intel GPU WebNN rows were timed on 2026-11-09 from 05:00 to 05:10 (Edge 157.0.4341.42), between two runs of the same
+check on the RTX with the fp16 graph as a control: 18.2 ms before and 18.5 ms after for 101 tokens (Edge 156's row
+above: 17.0 ms). No d1-on-windows row was timed with them, so their last column is empty.
+
 Edge's rows marked "signed-in session" ran from the laptop's desktop. Its int8-weight cpu and npu rows ran from an ssh
 session, where Edge's GPU process restarted twice and the page then answered (see "What did not work").
 
@@ -102,7 +117,16 @@ session, where Edge's GPU process restarted twice and the page then answered (se
   17.0 ms in Edge and 17.3 ms in Chrome for 101 tokens (×0.78 and ×0.80 of the CUDA re-timing), for prompts up to 128
   tokens; the int8-weight graph takes 146 to 147 ms. In Chrome 159 the same `deviceType` is the WebGPU EP 0.5.0: 210 ms
   with int8 weights, and 142 ms with fp16, where one answer changes (see "What did not work"). `powerPreference:
-  'low-power'` still picks the RTX in both Chromes; Edge was not tried, so there is no WebNN row on the Intel GPU.
+  'low-power'` still picks the RTX in both Chromes and in Edge 157 (Edge's log names DirectML on the RTX as the
+  device it used); Chromium's WebNN code for ONNX Runtime does not read the power preference yet (a TODO in its
+  source, crbug.com/425487285).
+- WebNN on the Intel GPU: Edge reaches it with Chromium's switch `--webnn-ort-ep-device=<EP name>,<vendor id>,<device
+  id>`, which makes WebNN hand ONNX Runtime that one device whatever `deviceType` the page asks for (ONNX Runtime's CPU
+  fallback stays on). On this laptop's Intel(R) Graphics (`0x8086,0xb0a0`) the OpenVINO EP takes 103 ms with fp16 and
+  52.9 ms with int8 weights for 101 tokens (×0.74 and ×0.38 of d1-on-windows' Intel GPU row), and DirectML 107 ms and
+  829 ms. The int8-weight graph runs on the OpenVINO EP here, where it fails on Windows ML's OpenVINO EP (see "What did
+  not work"). The cause was not separated; one difference is that through WebNN the EP gets a graph Chromium rebuilds
+  from the page's WebNN operations, not the ONNX file.
 - WebNN on the NPU: the int8-weight graph takes 55.2 to 56.1 ms in all three browsers (d1-on-windows' NPU row: 54.0 ms
   in the re-timing) and the fp16 graph 97.2 ms in Edge, as on Windows ML (96.8 ms).
 - WebNN on the CPU: `deviceType` cpu is the OpenVINO EP's CPU device, 526 to 532 ms with one changed answer (see "What
@@ -125,7 +149,8 @@ for Edge. Two more things were needed: read access for app containers on the unp
   block 4).
 - 32 GB of RAM with the page file on, and no other heavy job: GenAI's int8 builder and the NPU graph's quantization each
   peaked at 22 to 23 GiB in use and 29 GiB committed, and Edge's NPU compile of the fp16 graph held about 26 GiB.
-- Edge for the WebNN part (the rows: 156.0.4314.58; the re-run of the WebNN block on 2026-11-08: 157).
+- Edge for the WebNN part (the rows: 156.0.4314.58; the re-run of the WebNN block on 2026-11-08: 157; the Intel GPU rows on
+  2026-11-09: 157.0.4341.42).
 - A folder with LiquidAI/d1-3B from Hugging Face (this run: revision 051bcc464b).
 
 ## Run it
@@ -348,6 +373,45 @@ foreach ($run in $runs) {
 # The page itself, as an app window
 if (-not $server.HasExited) { Start-Process $edge -ArgumentList "--user-data-dir=`"$PWD\profiles\demo`" --no-first-run --enable-features=WebMachineLearningNeuralNetwork --app=http://127.0.0.1:8780/demo.html" }
 # Close the window when done, then: Stop-Process -Id $server.Id
+```
+
+The Intel GPU rows in the table at the top came from this page's check with Edge started with Chromium's switch
+`--webnn-ort-ep-device=<EP name>,<vendor id>,<device id>`; with it, WebNN picks that one device whatever `deviceType`
+the page asks for, with ONNX Runtime's CPU fallback still on, and if no registered device matches, the session fails.
+`0x8086,0xb0a0` are the vendor and device ids of this laptop's Intel(R) Graphics: Edge's log, written with
+`--enable-logging --v=0 --webnn-ort-logging-level=INFO`, lists every device it can use as `Registered OrtEpDevice` and
+the one a page used as `Selected OrtEpDevice #0`. The page's `power` argument (`&power=low-power`) passes WebNN's
+`powerPreference`. The block below runs those checks between two checks on the RTX, as when the rows were timed.
+Run as written on 2026-11-09, its seven checks scored 311/311 on the same devices (Edge's log), and their 101-token
+times were within 5 % of the rows.
+
+```powershell
+# After the demo block (close its app window first), in the same window on the laptop's own desktop. One headless check
+# each: the RTX before, the Intel GPU through the OpenVINO EP and DirectML (fp16, int8 weights), powerPreference
+# 'low-power' with no switch, the RTX after. Each check's device lines from Edge's log go to <tag>.selected.txt.
+$edge = "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+$py = ".venv-build\Scripts\python.exe"
+if (-not $server -or $server.HasExited) { $server = Start-Process $py -ArgumentList "web\serve.py --root webroot --results webresults --port 8780" -WindowStyle Hidden -PassThru; Start-Sleep 5 }
+$runs = if ($server.HasExited) { Write-Host "Port 8780 is taken (Get-NetTCPConnection -LocalPort 8780 -State Listen): stop that program, then run this block again."; @() } else {
+  "demo_gpu_h16_before::h16", "demo_igpu_ov_h16:OpenVINOExecutionProvider:h16", "demo_igpu_dml_h16:DmlExecutionProvider:h16", "demo_igpu_ov_w8:OpenVINOExecutionProvider:w8",
+  "demo_igpu_dml_w8:DmlExecutionProvider:w8", "demo_lowpower_gpu_h16:low-power:h16", "demo_gpu_h16_after::h16" }
+foreach ($run in $runs) {
+  $tag, $how, $form = $run.Split(":")
+  $switch = if ($how -like "*ExecutionProvider") { "--webnn-ort-ep-device=$how,0x8086,0xb0a0" } else { "" }
+  $power = if ($how -eq "low-power") { "&power=low-power" } else { "" }
+  Remove-Item "webresults\$tag.*", "$tag.*" -ErrorAction SilentlyContinue
+  Remove-Item "profiles\$tag" -Recurse -Force -ErrorAction SilentlyContinue
+  $browser = Start-Process $edge -ArgumentList "--user-data-dir=`"$PWD\profiles\$tag`" --no-first-run --headless=new --enable-features=WebMachineLearningNeuralNetwork --enable-logging --v=0 --webnn-ort-logging-level=INFO $switch `"http://127.0.0.1:8780/demo.html?check=parity&device=gpu&form_gpu=$form$power&tag=$tag`"" -PassThru
+  $t0 = Get-Date
+  while (-not (Test-Path "webresults\$tag.done") -and ((Get-Date) - $t0).TotalMinutes -lt 20) { Start-Sleep 5 }
+  Get-CimInstance Win32_Process -Filter "Name = 'msedge.exe'" | Where-Object { $_.CommandLine -like "*profiles\$tag*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+  Get-ChildItem "profiles\$tag" -Recurse -Filter chrome_debug.log | Select-String -Pattern "Selected OrtEpDevice" | ForEach-Object { $_.Line } | Out-File "$tag.selected.txt" -Encoding utf8
+  if (-not (Test-Path "webresults\$tag.done")) { Write-Host "No result for $tag after 20 minutes; the page's log is webresults\$tag.log"; continue }
+  # The device WebNN used: the EP and the hardware of "Selected OrtEpDevice #0"
+  Select-String -Path "$tag.selected.txt" -Pattern "Selected OrtEpDevice #0" | ForEach-Object { $l = $_.Line; $i = [Math]::Max(0, $l.IndexOf("OrtHardwareDevice")); "$tag $([regex]::Match($l, 'ep_name: \w+').Value), $($l.Substring($i, [Math]::Min(170, $l.Length - $i)))" }
+  & $py web\check_demo.py --result "webresults\$tag.json" --d1 d1-on-windows --upstream upstream --head ir-128\lm_head.npy --reference reference_probs.json --ids ids-128.json --out "$tag.jsonl"
+}
+# Then: Stop-Process -Id $server.Id
 ```
 
 ## What did not work

@@ -37,7 +37,7 @@ def main():
     device = (result.get("devices") or ["?"])[0]
     session = (result.get("sessions") or {}).get(device, {})
     meta = {"_meta": True, "source": args.result, "page": "demo.html", "ep": f"WebNN {device} via ONNX Runtime Web {(result.get('ort') or {}).get('web', '')}",
-            "form": session.get("form"), "load_s": session.get("load_s"), "userAgent": result.get("userAgent")}
+            "form": session.get("form"), "power": result.get("power"), "load_s": session.get("load_s"), "userAgent": result.get("userAgent")}
     for key in ("error", "fatal"):
         if result.get(key):
             meta[key] = result[key]
@@ -69,7 +69,7 @@ def main():
             d = max(abs(py[k] - page[k]) for k in py)
             if d > compare["max_abs_dp"]:
                 compare["max_abs_dp"], compare["max_abs_dp_at"] = d, row["q"]
-    out = {"tag": result.get("tag"), "device": device, "form": session.get("form"), "load_s": session.get("load_s"),
+    out = {"tag": result.get("tag"), "device": device, "form": session.get("form"), "power": result.get("power"), "load_s": session.get("load_s"),
            "ids": result.get("ids"), "same_top": summary.get("same_top"), "questions_scored": summary.get("questions_scored"),
            "flips": summary.get("flips"), "max_abs_dp_vs_reference": summary.get("max_abs_dp"), "page_vs_python_head": compare,
            "speed_median_ms": result.get("speed_median_ms"), "examples": result.get("examples"), "parity_s": result.get("parity_s"),

@@ -1,0 +1,175 @@
+{
+ "tag": "demo_igpu_dml_h16",
+ "device": "gpu",
+ "form": "h16",
+ "power": null,
+ "load_s": 19.336590000003575,
+ "ids": {
+  "here": 311,
+  "there": 311,
+  "same": 311,
+  "refused_same": 1,
+  "longer": 104,
+  "mismatches": []
+ },
+ "same_top": 311,
+ "questions_scored": 311,
+ "flips": [],
+ "max_abs_dp_vs_reference": 0.00519371425965387,
+ "page_vs_python_head": {
+  "rows": 311,
+  "same_top": 311,
+  "max_abs_dp": 1.0731461427271327e-06,
+  "max_abs_dp_at": "tv4x_qnli_05/answers"
+ },
+ "speed_median_ms": {
+  "39": 108.74500000476837,
+  "101": 106.94999998807907
+ },
+ "examples": [
+  {
+   "example": "Support ticket",
+   "name": "refund",
+   "tokens": 39,
+   "median_ms": 107.19499999284744,
+   "min_ms": 106.16500002145767,
+   "max_ms": 108.03999999165535,
+   "answer": {
+    "type": "noul",
+    "noul": 0.9896112678797613
+   }
+  },
+  {
+   "example": "Support ticket",
+   "name": "team",
+   "tokens": 61,
+   "median_ms": 108.83000001311302,
+   "min_ms": 105.14999997615814,
+   "max_ms": 118.80000001192093,
+   "answer": {
+    "type": "choice",
+    "choice": "billing",
+    "confidence": 0.9835266654563117,
+    "probabilities": {
+     "billing": 0.9835266654563117,
+     "technical": 0.0106353662852863,
+     "fraud": 0.005837968258402016
+    }
+   }
+  },
+  {
+   "example": "Support ticket",
+   "name": "urgency",
+   "tokens": 54,
+   "median_ms": 104.95500001311302,
+   "min_ms": 104.65999999642372,
+   "max_ms": 107.71000000834465,
+   "answer": {
+    "type": "score",
+    "score": 0.7563871030549767,
+    "confidence": 0.5680571871881385,
+    "probabilities": {
+     "0": 0.33777785487844225,
+     "1": 0.5680571871881385,
+     "2": 0.09416495793341914
+    },
+    "legend": {
+     "0": "Can wait",
+     "1": "Today",
+     "2": "Blocking the customer now"
+    }
+   }
+  },
+  {
+   "example": "Expense line",
+   "name": "category",
+   "tokens": 106,
+   "median_ms": 109.08000001311302,
+   "min_ms": 106.2950000166893,
+   "max_ms": 110.83500000834465,
+   "answer": {
+    "type": "choice",
+    "choice": "travel",
+    "confidence": 0.972878530217005,
+    "probabilities": {
+     "travel": 0.972878530217005,
+     "meals": 0.009976653141460668,
+     "software": 0.006602252865585106,
+     "office": 0.010542563775949424
+    }
+   }
+  },
+  {
+   "example": "Expense line",
+   "name": "needs_receipt",
+   "tokens": 84,
+   "median_ms": 106.8299999833107,
+   "min_ms": 106.13000002503395,
+   "max_ms": 107.6749999821186,
+   "answer": {
+    "type": "noul",
+    "noul": 0.9879025778928151
+   }
+  },
+  {
+   "example": "Product review",
+   "name": "sentiment",
+   "tokens": 60,
+   "median_ms": 106.10999998450279,
+   "min_ms": 105.61500000953674,
+   "max_ms": 107.00499999523163,
+   "answer": {
+    "type": "choice",
+    "choice": "mixed",
+    "confidence": 0.5335860174911174,
+    "probabilities": {
+     "positive": 0.07812852196962938,
+     "mixed": 0.5335860174911174,
+     "negative": 0.38828546053925317
+    }
+   }
+  },
+  {
+   "example": "Product review",
+   "name": "defect",
+   "tokens": 48,
+   "median_ms": 106.11500000953674,
+   "min_ms": 102.30500000715256,
+   "max_ms": 108.03999999165535,
+   "answer": {
+    "type": "noul",
+    "noul": 0.9863799817792038
+   }
+  },
+  {
+   "example": "Product review",
+   "name": "stars",
+   "tokens": 78,
+   "median_ms": 103.18499997258186,
+   "min_ms": 101.96000000834465,
+   "max_ms": 111.81499999761581,
+   "answer": {
+    "type": "score",
+    "score": 1.4693515490712064,
+    "confidence": 0.46730931055890657,
+    "probabilities": {
+     "0": 0.06771562416516404,
+     "1": 0.46730931055890657,
+     "2": 0.3964064472054665,
+     "3": 0.06504512818048526,
+     "4": 0.0035234898899777502
+    },
+    "legend": {
+     "0": "1 star",
+     "1": "2 stars",
+     "2": "3 stars",
+     "3": "4 stars",
+     "4": "5 stars"
+    }
+   }
+  }
+ ],
+ "parity_s": 33.81893000000715,
+ "errors": null,
+ "score_error": null
+}

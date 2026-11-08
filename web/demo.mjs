@@ -6,7 +6,9 @@
 //
 // URL parameters: devices (default gpu,npu,cpu: one session each, created in that order), form_gpu / form_npu /
 // form_cpu (folders under models/, default h16 / w8 / w8), label_gpu / label_npu / label_cpu, machine (a caption),
-// head (default models/lm_head.npy), tokenizer (default models/tokenizer.json), example (0-2, loaded at start).
+// head (default models/lm_head.npy), tokenizer (default models/tokenizer.json), example (0-2, loaded at start), power
+// (WebNN's powerPreference for every context the page creates: default, high-performance or low-power; not set = the
+// browser's default).
 // Checks, which post their result to serve.py's /result/<tag>: check=ids (the page's ids against fixtures/npu_ids_128.json,
 // no model), check=parity&device=<d> (the 311 questions that fit 128 tokens: answers from the page's head, the hidden
 // states for the Python head, the 39- and 101-token times and the examples' times), tag=<result name>.
@@ -17,6 +19,7 @@ import { parseJson, plan, answer, probabilities, probsOf, RequestError } from '.
 const P = new URLSearchParams(location.search);
 const LENGTH = 128, PAD = 124893;
 const CHECK = P.get('check') || '';
+const POWER = P.get('power') || '';
 const TAG = P.get('tag') || '';
 const DEVICES = (CHECK === 'parity' ? [P.get('device') || 'gpu'] : (P.get('devices') || 'gpu,npu,cpu').split(',')).filter((d) => ['gpu', 'npu', 'cpu'].includes(d));
 const FORMS = { gpu: P.get('form_gpu') || 'h16', npu: P.get('form_npu') || 'w8', cpu: P.get('form_cpu') || 'w8' };
@@ -76,7 +79,7 @@ async function createSession(device) {
   try {
     if (!('ml' in navigator)) throw new Error('navigator.ml is undefined: WebNN is not enabled in this browser');
     const dir = `models/${s.form}`;
-    const ctx = await navigator.ml.createContext({ deviceType: device });
+    const ctx = await navigator.ml.createContext(POWER ? { deviceType: device, powerPreference: POWER } : { deviceType: device });
     const manifest = await (await fetch(`${dir}/manifest.json`)).json();
     const externalData = Object.keys(manifest.files).map((name) => ({ path: name, data: `${dir}/${name}` }));
     s.session = await ort.InferenceSession.create(`${dir}/model.onnx`, {
@@ -86,7 +89,7 @@ async function createSession(device) {
     s.loadS = (performance.now() - s.t0) / 1000;
     await forward(s, [124894, 124899, 5922, 207]);  // one warm run ("<|startoftext|><|im_start|>user\n"), not shown
     s.state = 'ready';
-    await log(`${device} (${s.form}) ready: session ${s.loadS.toFixed(1)} s`);
+    await log(`${device} (${s.form}${POWER ? `, ${POWER}` : ''}) ready: session ${s.loadS.toFixed(1)} s`);
   } catch (e) {
     s.state = 'failed'; s.error = errorText(e);
     await log(`${device} (${s.form}) failed after ${((performance.now() - s.t0) / 1000).toFixed(1)} s: ${s.error}`);
@@ -200,7 +203,7 @@ function renderDevices() {
     const b = el('button', 'dev' + (d === device ? ' on' : '') + (s.state === 'failed' ? ' failed' : ''));
     b.dataset.device = d;
     b.append(el('div', 'name', LABELS[d]));
-    const st = s.state === 'ready' ? `WebNN ${d} · ${s.form} · ready` : s.state === 'loading' ? `WebNN ${d} · loading ${((performance.now() - s.t0) / 1000).toFixed(0)} s`
+    const st = s.state === 'ready' ? `WebNN ${d}${POWER ? ` ${POWER}` : ''} · ${s.form} · ready` : s.state === 'loading' ? `WebNN ${d} · loading ${((performance.now() - s.t0) / 1000).toFixed(0)} s`
       : s.state === 'failed' ? `failed: ${s.error.split('\n')[0]}` : `WebNN ${d} · waiting`;
     b.append(el('div', 'st', st));
     b.title = s.error || '';
@@ -366,7 +369,7 @@ async function checkParity(out, rows) {
 // ---- start -----------------------------------------------------------------------------------------------------------
 let tok, head;
 async function main() {
-  const out = { tag: TAG, check: CHECK, devices: DEVICES, forms: FORMS, started: new Date().toISOString(), userAgent: navigator.userAgent, ort: ort.env.versions };
+  const out = { tag: TAG, check: CHECK, devices: DEVICES, forms: FORMS, power: POWER || null, started: new Date().toISOString(), userAgent: navigator.userAgent, ort: ort.env.versions };
   window.demo = { ready: false, out, loadExample, decide, rect, cursor, sessions, selectDevice: (d) => { device = d; renderDevices(); },
     state: () => ({ busy, device, summary: $('#summary').textContent, answers: [...document.querySelectorAll('#answers .card')].map((c) => c.innerText) }) };
   EXAMPLES.forEach((ex, i) => { const b = el('button', '', ex.title); b.addEventListener('click', () => loadExample(i)); $('#examples').append(b); });
