@@ -1,0 +1,38 @@
+{
+ "results": "<work>\\out\\weblp_chrome157_gpu_h16.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "models/h16",
+  "ep": "WebNN gpu via ONNX Runtime Web 1.31.1",
+  "ep_options": {
+   "deviceType": "gpu",
+   "powerPreference": "low-power",
+   "graphOptimizationLevel": "basic"
+  },
+  "load_s": 30.289755000010132,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "source": "<work>\\webresults\\weblp_chrome157_gpu_h16.json"
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.01373978565038042,
+ "max_abs_dp_at": "semif_8e8c3804a3c15ebb31e3/answer",
+ "median_abs_dp": 0.0004377186095226304,
+ "flips": [],
+ "refused": [],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 23.3
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 22.5
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+# What the README's blocks write into this folder
+/.venv-*/
+/d1-on-windows/
+/upstream/
+/cache/
+/cpu-fp32/
+/cpu-int8/
+/cpu-int8-nosw/
+/cuda-fp16/
+/x/
+/ir-128/
+/ir-128-q/
+/webroot/
+/webresults/
+/profiles/
+/package/
+/*.jsonl
+/*.json
+/*.tgz
+/rebuild_requests.py

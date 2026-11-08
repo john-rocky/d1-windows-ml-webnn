@@ -1,0 +1,13 @@
+23:50:44 ua Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36 | navigator.ml true | isolated true | ort {"common":"1.31.1","web":"1.31.1"}
+23:50:47 createContext({deviceType: gpu}) ok in 3054.0 ms; input int64 ["float32","float16","int32","uint32","int64","uint64","int8","uint8","int4","uint4"]
+23:51:21 session created in 33.8 s; inputs input_ids,last outputs hidden
+23:51:26 speed pass 0 done (18 runs)
+23:51:37 speed pass 1 done (18 runs)
+23:52:05 parity 50
+23:52:15 parity 100
+23:52:24 parity 150
+23:52:31 parity 200
+23:52:46 parity 250
+23:53:08 parity 300
+23:53:13 parity done (311)
+23:53:13 posted result

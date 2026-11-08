@@ -1,0 +1,19 @@
+{"_meta": true, "model": "models/w8", "ep": "WebNN npu via ONNX Runtime Web 1.31.1", "ep_options": {"deviceType": "npu", "powerPreference": "default", "graphOptimizationLevel": "basic"}, "load_s": 76.3254050000012, "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0", "source": "<work>\\webresults\\webt_edge_npu_w8.json", "context_error": "UnknownError: Failed to execute 'createContext' on 'ML': WebNN service connection error."}
+{"q": "speed_39_0/refund", "ms": 55.744199992273934, "page_ms": 55.554999992251396, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_1/refund", "ms": 55.24619999376591, "page_ms": 55.21500000357628, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_2/refund", "ms": 55.20759999984875, "page_ms": 55.185000002384186, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_3/refund", "ms": 55.20620000374038, "page_ms": 55.185000002384186, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_4/refund", "ms": 55.173899999586865, "page_ms": 55.15500000119209, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_5/refund", "ms": 54.90160000079777, "page_ms": 54.88500000536442, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_6/refund", "ms": 55.07569999061525, "page_ms": 55.059999987483025, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_7/refund", "ms": 55.07540000323206, "page_ms": 55.060000002384186, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_39_8/refund", "ms": 55.11070000194013, "page_ms": 55.09499999880791, "tokens": 39, "probs": {"true": 0.9891933631187909, "false": 0.010806636881209086}}
+{"q": "speed_101_0/refund", "ms": 55.05530000664294, "page_ms": 55.04000000655651, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_1/refund", "ms": 55.16759999329224, "page_ms": 55.144999995827675, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_2/refund", "ms": 55.38549999182578, "page_ms": 55.37000000476837, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_3/refund", "ms": 55.159100001328625, "page_ms": 55.144999995827675, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_4/refund", "ms": 55.13420001103077, "page_ms": 55.12000000476837, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_5/refund", "ms": 55.14450000412762, "page_ms": 55.13000001013279, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_6/refund", "ms": 55.09390000218991, "page_ms": 55.07999999821186, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_7/refund", "ms": 55.60880000202451, "page_ms": 55.59499999880791, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}
+{"q": "speed_101_8/refund", "ms": 55.789000010699965, "page_ms": 55.775000005960464, "tokens": 101, "probs": {"true": 0.9882091855347153, "false": 0.011790814465284738}}

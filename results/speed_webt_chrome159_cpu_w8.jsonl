@@ -1,0 +1,19 @@
+{"_meta": true, "model": "models/w8", "ep": "WebNN cpu via ONNX Runtime Web 1.31.1", "ep_options": {"deviceType": "cpu", "powerPreference": "default", "graphOptimizationLevel": "basic"}, "load_s": 14.535114999994635, "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36", "source": "<work>\\webresults\\webt_chrome159_cpu_w8.json"}
+{"q": "speed_39_0/refund", "ms": 527.0104999882169, "page_ms": 526.8199999928474, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_1/refund", "ms": 529.9458999941126, "page_ms": 529.9149999916553, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_2/refund", "ms": 526.2823000150966, "page_ms": 526.2600000053644, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_3/refund", "ms": 526.5333999951836, "page_ms": 526.515000000596, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_4/refund", "ms": 525.7073999991408, "page_ms": 525.6899999976158, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_5/refund", "ms": 528.990499981097, "page_ms": 528.9749999940395, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_6/refund", "ms": 530.2794000083813, "page_ms": 530.265000000596, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_7/refund", "ms": 526.5240999963135, "page_ms": 526.5100000053644, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_39_8/refund", "ms": 526.4452999923378, "page_ms": 526.4299999922514, "tokens": 39, "probs": {"true": 0.9890513751146276, "false": 0.010948624885372404}}
+{"q": "speed_101_0/refund", "ms": 527.620399990119, "page_ms": 527.6049999892712, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_1/refund", "ms": 524.764100005501, "page_ms": 524.75, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_2/refund", "ms": 526.704600006924, "page_ms": 526.6899999976158, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_3/refund", "ms": 525.0141999917105, "page_ms": 525, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_4/refund", "ms": 525.8487000107998, "page_ms": 525.8350000083447, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_5/refund", "ms": 524.623900003382, "page_ms": 524.609999999404, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_6/refund", "ms": 528.7736000070581, "page_ms": 528.7600000053644, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_7/refund", "ms": 525.5347999921069, "page_ms": 525.5199999958277, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}
+{"q": "speed_101_8/refund", "ms": 568.2385999957332, "page_ms": 568.2249999940395, "tokens": 101, "probs": {"true": 0.9882141182491376, "false": 0.01178588175086237}}

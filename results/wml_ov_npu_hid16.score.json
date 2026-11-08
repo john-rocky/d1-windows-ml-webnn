@@ -1,0 +1,87 @@
+{
+ "results": "<work>\\out\\wml_ov_npu_hid16.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "<models>\\d1-3b\\ov-static-128-hid16\\model_ctx.onnx",
+  "ep": "OpenVINOExecutionProvider NPU static 128 (ORT 1.28.3)",
+  "ep_options": {},
+  "opt": "all",
+  "load_s": 142.23948779999046,
+  "ort": "1.28.3",
+  "providers": [
+   "OpenVINOExecutionProvider",
+   "CPUExecutionProvider"
+  ],
+  "registered": {
+   "OpenVINOExecutionProvider": {
+    "version": "",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll",
+    "ensure_s": 0.412
+   },
+   "WebGpuExecutionProvider": {
+    "version": "",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.ONNX.WebGPU.EP.2_0.5.0.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_webgpu.dll",
+    "ensure_s": 0.026
+   }
+  },
+  "device": {
+   "type": "OrtHardwareDeviceType.NPU",
+   "vendor_id": "0x8086",
+   "device_id": "0xb03e",
+   "vendor": "Intel Corporation",
+   "ep_metadata": {
+    "AVAILABLE_DEVICES": "5010",
+    "COMPATIBILITY_CHECK": "NOT_APPLICABLE",
+    "DEVICE_ARCHITECTURE": "5010",
+    "DEVICE_GOPS": "{bf16:0,f16:25190.4,f32:0,i8:50380.8,u8:50380.8}",
+    "DEVICE_LUID": "4c3e010000000000",
+    "DEVICE_PCI_INFO": "{domain: 0 bus: 0 device: 0xb function: 0}",
+    "DEVICE_TYPE": "integrated",
+    "DEVICE_UUID": "80d1d11eb73811eab3de0242ac130004",
+    "EXECUTION_DEVICES": "NPU",
+    "FULL_DEVICE_NAME": "Intel(R) AI Boost",
+    "MODEL_PTR": "0000000000000000",
+    "NPU_COMPILER_VERSION": "524290",
+    "NPU_DEVICE_ALLOC_MEM_SIZE": "0",
+    "NPU_DEVICE_TOTAL_MEM_SIZE": "17179869184",
+    "NPU_DRIVER_VERSION": "1004841",
+    "NPU_MAX_TILES": "3",
+    "OPTIMAL_NUMBER_OF_INFER_REQUESTS": "1",
+    "OPTIMIZATION_CAPABILITIES": "FP16 INT8 EXPORT_IMPORT",
+    "RANGE_FOR_ASYNC_INFER_REQUESTS": "1 8 1",
+    "RANGE_FOR_STREAMS": "0 8",
+    "library_path": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll",
+    "os_driver_version": "1004841",
+    "ov_device": "NPU",
+    "version": "1.7.0+72b3270.ci.72"
+   }
+  }
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.046913943664522506,
+ "max_abs_dp_at": "tv4_020/answer",
+ "median_abs_dp": 0.0014754682173224731,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 54.3
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 54.3
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

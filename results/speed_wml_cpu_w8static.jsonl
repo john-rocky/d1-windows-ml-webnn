@@ -1,0 +1,19 @@
+{"_meta": true, "model": "<work>\\x\\w8-128\\model.onnx", "ep": "CPUExecutionProvider  static 128 (ORT 1.28.3)", "ep_options": {}, "opt": "all", "load_s": 17.66923620000307, "ort": "1.28.3", "providers": ["CPUExecutionProvider"], "registered": {"OpenVINOExecutionProvider": {"version": "", "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll", "ensure_s": 1.175}, "WebGpuExecutionProvider": {"version": "", "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.ONNX.WebGPU.EP.2_0.5.0.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_webgpu.dll", "ensure_s": 0.006}}, "device": {"type": "OrtHardwareDeviceType.CPU", "vendor_id": "0x8086", "device_id": "0x7", "vendor": "Intel", "ep_metadata": {"version": "1.28.3"}}}
+{"q": "speed_39_0/refund", "ms": 2269.5664999919245, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_1/refund", "ms": 2257.9765999980737, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_2/refund", "ms": 2258.6641000089003, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_3/refund", "ms": 2254.257900000084, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_4/refund", "ms": 2250.5745999951614, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_5/refund", "ms": 2258.1930000014836, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_6/refund", "ms": 2252.464199991664, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_7/refund", "ms": 2257.1914000000106, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_39_8/refund", "ms": 2253.8910000002943, "tokens": 39, "probs": {"true": 0.9892561441352593, "false": 0.010743855864740692}}
+{"q": "speed_101_0/refund", "ms": 2253.5029999999097, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_1/refund", "ms": 2259.5447999919998, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_2/refund", "ms": 2255.3973000030965, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_3/refund", "ms": 2252.4773000041023, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_4/refund", "ms": 2257.5406999967527, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_5/refund", "ms": 2259.7949000046356, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_6/refund", "ms": 2257.8789000108372, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_7/refund", "ms": 2259.1649999958463, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}
+{"q": "speed_101_8/refund", "ms": 2255.8955999993486, "tokens": 101, "probs": {"true": 0.9884366305914839, "false": 0.0115633694085161}}

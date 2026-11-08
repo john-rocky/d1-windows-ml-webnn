@@ -1,0 +1,87 @@
+{
+ "results": "wml130_ov_cpu_int8_392.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "<models>\\d1-3b\\cpu-int8",
+  "ep": "Windows ML OpenVINO",
+  "ep_options": {
+   "device_type": "CPU"
+  },
+  "overlay": "",
+  "device_type": "OpenVINO",
+  "model_type": "lfm2_vl_text",
+  "load_s": 20.69573340000352,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel",
+  "winml_eps": {
+   "_how": "upstream winml.py",
+   "_register_s": 6.681,
+   "OpenVINOExecutionProvider": {
+    "ready_state": "0",
+    "certification": "1",
+    "version": "1.8.95.0",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll"
+   },
+   "WebGpuExecutionProvider": {
+    "ready_state": "0",
+    "certification": "2",
+    "version": "0.5.0.0",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.ONNX.WebGPU.EP.2_0.5.0.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_webgpu.dll"
+   }
+  }
+ },
+ "questions_scored": 391,
+ "same_top": 390,
+ "max_abs_dp": 0.0513818718809983,
+ "max_abs_dp_at": "tv4s_16/decision",
+ "median_abs_dp": 0.0013884432629753807,
+ "flips": [
+  {
+   "q": "tv4_013/answer",
+   "got": "c",
+   "ref": "d",
+   "near_tie": true,
+   "delta": 0.021157167641543406,
+   "p": {
+    "a": 0.0087,
+    "b": 0.0104,
+    "c": 0.5062,
+    "d": 0.4747
+   },
+   "ref_p": {
+    "a": 0.0089,
+    "b": 0.0104,
+    "c": 0.4851,
+    "d": 0.4956
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 13,
+   "median_ms": 1102.5
+  },
+  "64-127": {
+   "n": 294,
+   "median_ms": 1739.5
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 2908.2
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 6276.7
+  },
+  "512-1023": null,
+  "1024+": null
+ }
+}

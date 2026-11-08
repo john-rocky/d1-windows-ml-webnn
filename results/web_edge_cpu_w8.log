@@ -1,0 +1,13 @@
+19:31:28 ua Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0 | navigator.ml true | isolated true | ort {"common":"1.31.1","web":"1.31.1"}
+19:31:28 createContext failed: UnknownError: Failed to execute 'createContext' on 'ML': WebNN service connection error.
+19:32:06 session created in 38.1 s; inputs input_ids,last outputs hidden
+19:32:19 speed pass 0 done (18 runs)
+19:32:30 speed pass 1 done (18 runs)
+19:33:02 parity 50
+19:33:34 parity 100
+19:34:14 parity 150
+19:34:57 parity 200
+19:35:36 parity 250
+19:36:17 parity 300
+19:36:26 parity done (311)
+19:36:26 posted result

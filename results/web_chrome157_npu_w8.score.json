@@ -1,0 +1,38 @@
+{
+ "results": "<work>\\out\\web_chrome157_npu_w8.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "models/w8",
+  "ep": "WebNN npu via ONNX Runtime Web 1.31.1",
+  "ep_options": {
+   "deviceType": "npu",
+   "powerPreference": "default",
+   "graphOptimizationLevel": "basic"
+  },
+  "load_s": 91.09806000000239,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+  "source": "<work>\\webresults\\web_chrome157_npu_w8.json"
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.04136622218097041,
+ "max_abs_dp_at": "tv4_020/answer",
+ "median_abs_dp": 0.0013104322203094793,
+ "flips": [],
+ "refused": [],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 57.6
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 57.5
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

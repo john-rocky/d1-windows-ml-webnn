@@ -1,0 +1,63 @@
+{
+ "results": "<work>\\out\\wml_cpu_w8static.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "<work>\\x\\w8-128\\model.onnx",
+  "ep": "CPUExecutionProvider  static 128 (ORT 1.28.3)",
+  "ep_options": {},
+  "opt": "all",
+  "load_s": 14.96122139999352,
+  "ort": "1.28.3",
+  "providers": [
+   "CPUExecutionProvider"
+  ],
+  "registered": {
+   "OpenVINOExecutionProvider": {
+    "version": "",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll",
+    "ensure_s": 0.344
+   },
+   "WebGpuExecutionProvider": {
+    "version": "",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.ONNX.WebGPU.EP.2_0.5.0.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_webgpu.dll",
+    "ensure_s": 0.004
+   }
+  },
+  "device": {
+   "type": "OrtHardwareDeviceType.CPU",
+   "vendor_id": "0x8086",
+   "device_id": "0x7",
+   "vendor": "Intel",
+   "ep_metadata": {
+    "version": "1.28.3"
+   }
+  }
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.056403144995803234,
+ "max_abs_dp_at": "tv4_029/answer",
+ "median_abs_dp": 0.0018917692679181752,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 2589.7
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 2490.7
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

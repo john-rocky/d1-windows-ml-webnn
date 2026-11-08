@@ -1,0 +1,89 @@
+{
+ "results": "<work>\\out\\wml_cpu_int8_nosw.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "<models>\\d1-3b\\cpu-int8-nosw",
+  "ep": "Windows ML cpu",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "CPU",
+  "model_type": "lfm2_vl_text",
+  "load_s": 33.31829879998986,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel",
+  "winml_eps": {
+   "_how": "upstream winml.py",
+   "_register_s": 8.872,
+   "OpenVINOExecutionProvider": {
+    "ready_state": "0",
+    "certification": "1",
+    "version": "1.8.95.0",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.Intel.OpenVINO.EP.Framework.2_1.8.95.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_openvino_plugin.dll"
+   },
+   "WebGpuExecutionProvider": {
+    "ready_state": "0",
+    "certification": "2",
+    "version": "0.5.0.0",
+    "library": "C:\\Program Files\\WindowsApps\\Microsoft.WinML.ONNX.WebGPU.EP.2_0.5.0.0_x64__8wekyb3d8bbwe\\ExecutionProvider\\onnxruntime_providers_webgpu.dll"
+   }
+  }
+ },
+ "questions_scored": 415,
+ "same_top": 414,
+ "max_abs_dp": 0.07116405317775143,
+ "max_abs_dp_at": "tv4s_16/decision",
+ "median_abs_dp": 0.0014730501355567568,
+ "flips": [
+  {
+   "q": "tv4s_16/decision",
+   "got": "0",
+   "ref": "1",
+   "near_tie": false,
+   "delta": 0.07116405317775143,
+   "p": {
+    "0": 0.5014,
+    "1": 0.4952,
+    "2": 0.0034
+   },
+   "ref_p": {
+    "0": 0.4302,
+    "1": 0.5661,
+    "2": 0.0037
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 1194.6
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 2107.2
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 3738.8
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 7155.0
+  },
+  "512-1023": {
+   "n": 3,
+   "median_ms": 21990.1
+  },
+  "1024+": {
+   "n": 17,
+   "median_ms": 38865.8
+  }
+ }
+}

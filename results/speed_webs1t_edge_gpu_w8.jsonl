@@ -1,0 +1,19 @@
+{"_meta": true, "model": "models/w8", "ep": "WebNN gpu via ONNX Runtime Web 1.31.1", "ep_options": {"deviceType": "gpu", "powerPreference": "default", "graphOptimizationLevel": "basic"}, "load_s": 17.105239999994634, "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0", "source": "<work>\\webresults\\webs1t_edge_gpu_w8.json"}
+{"q": "speed_39_0/refund", "ms": 139.52579999063164, "page_ms": 133.36499999463558, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_1/refund", "ms": 162.72379999922123, "page_ms": 162.64499999582767, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_2/refund", "ms": 174.12890000874177, "page_ms": 174.09000000357628, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_3/refund", "ms": 152.06939999002498, "page_ms": 152, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_4/refund", "ms": 143.48639998794533, "page_ms": 143.44499999284744, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_5/refund", "ms": 140.07650000683498, "page_ms": 140.03499999642372, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_6/refund", "ms": 139.47019999474287, "page_ms": 139.4399999976158, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_7/refund", "ms": 149.23250000388362, "page_ms": 149.20499999821186, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_39_8/refund", "ms": 165.01850000710692, "page_ms": 164.98499999940395, "tokens": 39, "probs": {"true": 0.9892357515430842, "false": 0.010764248456915815}}
+{"q": "speed_101_0/refund", "ms": 158.8368000027258, "page_ms": 158.8100000023842, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_1/refund", "ms": 144.41229999496136, "page_ms": 144.38500000536442, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_2/refund", "ms": 137.02039999328554, "page_ms": 136.98999999463558, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_3/refund", "ms": 135.0131000096444, "page_ms": 134.98499999940395, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_4/refund", "ms": 137.02710000262596, "page_ms": 137, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_5/refund", "ms": 146.43630000751, "page_ms": 146.40999999642372, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_6/refund", "ms": 161.91659999941476, "page_ms": 161.89000000059605, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_7/refund", "ms": 158.24700000067241, "page_ms": 158.2199999988079, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}
+{"q": "speed_101_8/refund", "ms": 148.37610001850408, "page_ms": 148.3500000089407, "tokens": 101, "probs": {"true": 0.9882251539171149, "false": 0.011774846082885149}}

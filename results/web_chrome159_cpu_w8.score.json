@@ -1,0 +1,58 @@
+{
+ "results": "<work>\\out\\web_chrome159_cpu_w8.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "models/w8",
+  "ep": "WebNN cpu via ONNX Runtime Web 1.31.1",
+  "ep_options": {
+   "deviceType": "cpu",
+   "powerPreference": "default",
+   "graphOptimizationLevel": "basic"
+  },
+  "load_s": 20.750060000002385,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+  "source": "<work>\\webresults\\web_chrome159_cpu_w8.json"
+ },
+ "questions_scored": 311,
+ "same_top": 310,
+ "max_abs_dp": 0.07612703801374421,
+ "max_abs_dp_at": "tv4_029/answer",
+ "median_abs_dp": 0.0018420771652415124,
+ "flips": [
+  {
+   "q": "tv4_027/answer",
+   "got": "d",
+   "ref": "b",
+   "near_tie": false,
+   "delta": 0.0176803978321729,
+   "p": {
+    "a": 0.0061,
+    "b": 0.3969,
+    "c": 0.1954,
+    "d": 0.4016
+   },
+   "ref_p": {
+    "a": 0.0058,
+    "b": 0.4116,
+    "c": 0.1987,
+    "d": 0.3839
+   }
+  }
+ ],
+ "refused": [],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 587.4
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 665.0
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}
