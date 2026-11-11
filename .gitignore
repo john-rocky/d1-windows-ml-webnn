@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
-# What the README's blocks write into this folder
+# What the blocks of docs/run-it.md write into this folder
 /.venv-*/
 /d1-on-windows/
 /upstream/

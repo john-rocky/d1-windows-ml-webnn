@@ -104,7 +104,7 @@ async function forward(s, ids) {
   const res = await s.session.run({ input_ids: new ort.Tensor('int32', input, [1, LENGTH]), last: new ort.Tensor('int32', new Int32Array([ids.length - 1]), []) });
   return await res.hidden.getData();
 }
-// One decision: the forward pass and the read-out (the span of the static rows' times in the README).
+// One decision: the forward pass and the read-out (the span of the static rows' times in docs/results.md).
 async function decideOne(s, step, withAnswer = true) {
   const t = performance.now();
   const hidden = await forward(s, step.ids);

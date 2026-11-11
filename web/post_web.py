@@ -17,7 +17,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))  # run_genai.py
-sys.path.insert(0, os.path.join(HERE, "..", "d1-on-windows", "npu"))  # head.py of d1-on-windows (README step 1)
+sys.path.insert(0, os.path.join(HERE, "..", "d1-on-windows", "npu"))  # head.py of d1-on-windows (docs/run-it.md, first block)
 sys.stdout.reconfigure(encoding="utf-8")
 
 
